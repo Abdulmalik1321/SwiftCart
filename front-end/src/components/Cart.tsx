@@ -30,7 +30,7 @@ export function Cart({
 
   return (
     <div
-      className="w-full md:w-1/2 bg-background fixed w-full h-[95vh] rounded-t-3xl border-t-2 border-primary transition-all duration-300 overflow-x-hidden overflow-y-scroll"
+      className="w-full md:w-1/2 bg-background fixed h-[95vh] rounded-t-3xl border-t-2 border-primary transition-all duration-300 overflow-x-hidden overflow-y-scroll"
       style={{ bottom: `-${cartHeight}vh` }}
     >
       <div
