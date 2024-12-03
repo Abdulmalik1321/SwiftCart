@@ -6,8 +6,11 @@ import {
   AccordionTrigger,
 } from "@/shadcn/ui/accordion";
 import { Button } from "@/shadcn/ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "@/shadcn/ui/dialog";
+
 import { Trash2 } from "lucide-react";
 import { useState } from "react";
+import { Checkout } from "./Checkout";
 
 export function Cart({
   cart,
@@ -27,6 +30,8 @@ export function Cart({
     }
     return acc;
   }, [] as (Product & { qty: number })[]);
+
+  const totalAmount = cart.reduce((total, item) => total + item.price, 0);
 
   return (
     <div
@@ -49,14 +54,25 @@ export function Cart({
       </div>
       <div className="w-full h-12 flex items-center justify-around gap-2 mt-[0.5vh]">
         <span>العدد: {cart.length}</span>
-        <span>
-          الاجمالي:{" "}
-          {cart.reduce((total, item) => total + item.price, 0).toFixed(2)}
-        </span>
+        <span>الاجمالي: {totalAmount.toFixed(2)}</span>
       </div>
 
       <div className="p-5">
-        <Button className="w-full">اتمام الطلب</Button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button
+              onClick={() => {
+                setCartHeight(88);
+              }}
+              className="w-full"
+            >
+              اتمام الطلب
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="w-[90%]">
+            <Checkout cart={cart} totalAmount={totalAmount} />
+          </DialogContent>
+        </Dialog>
         {aggregated.map((product) => (
           <Accordion key={"cart-" + product.id} type="single" collapsible>
             <AccordionItem value="item-1">
