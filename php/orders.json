@@ -1,0 +1,19 @@
+[
+  {
+    "cart_id": "10000",
+    "cart_amount": 0,
+    "cart_description": "",
+    "customer_details": {
+      "name": null,
+      "email": null,
+      "phone": null,
+      "street1": null,
+      "city": null,
+      "state": null,
+      "country": "SAU",
+      "zip": null
+    },
+    "order_status": "pending",
+    "date": "Sunday 1st of December 2024 10:13:04 PM"
+  }
+]
