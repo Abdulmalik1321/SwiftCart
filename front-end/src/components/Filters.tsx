@@ -1,13 +1,17 @@
 import { Button } from "@/shadcn/ui/button";
-import { useState } from "react";
-import filters from "../assets/json/grocery_filters_arabic.json";
+import { useEffect, useState } from "react";
 import { ChevronRightCircleIcon } from "lucide-react";
 import { Input } from "@/shadcn/ui/input";
-import { Product } from "@/App";
+import { Product, url } from "@/App";
 
 type Subcategory = {
   type: string;
   brands: string[];
+};
+
+type Filter = {
+  category: string;
+  subcategories: Subcategory[];
 };
 
 export function Filters({
@@ -19,6 +23,7 @@ export function Filters({
   products: Product[];
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
 }) {
+  const [filters, setFilters] = useState<Filter[]>([]);
   const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
   const [brands, setBrands] = useState<string[]>([]);
   const [translateY, setTranslateY] = useState(0);
@@ -28,6 +33,15 @@ export function Filters({
     subcategory: "",
     brand: "",
   });
+
+  useEffect(() => {
+    fetch(url + "json/grocery_filters_arabic.json")
+      .then((response) => response.json())
+      .then((data) => {
+        setFilters(data);
+      })
+      .catch(console.error);
+  }, []);
 
   const filterProducts = (filterType: string, filterValue: string) => {
     switch (filterType) {

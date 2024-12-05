@@ -1,7 +1,6 @@
 import { Filters } from "./components/Filters";
 import { NavBar } from "./components/NavBar";
-import productsJson from "./assets/json/products_data.json";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ProductsDisplay } from "./components/ProductsDisplay";
 import { Cart } from "./components/Cart";
 
@@ -17,11 +16,27 @@ export type Product = {
   unit: string;
 };
 
-function App() {
-  const [products, setProducts] = useState<Product[]>(productsJson);
-  const [cart, setCart] = useState<Product[]>([]);
+export const url = "https://testing.smart-development.net/";
 
-  console.log(cart);
+function App() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [cart, setCart] = useState<Product[]>([]);
+  const [productsJson, setProductsJson] = useState<Product[]>([]);
+
+  useEffect(() => {
+    fetch(url + "json/products_data.json")
+      .then((response) => response.json())
+      .then((data) => {
+        setProductsJson(data);
+      })
+      .catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    setProducts(productsJson);
+  }, [productsJson]);
+
+  console.log(products);
 
   return (
     <main className="h-screen flex justify-center overflow-hidden">
